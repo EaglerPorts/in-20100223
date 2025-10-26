@@ -1,88 +1,85 @@
 package net.minecraft.client.sound;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.lax1dude.eaglercraft.EagRuntime;
 import net.lax1dude.eaglercraft.EaglerInputStream;
+import net.lax1dude.eaglercraft.Random;
+import net.lax1dude.eaglercraft.internal.EnumPlatformType;
 import net.lax1dude.eaglercraft.internal.IAudioCacheLoader;
 import net.lax1dude.eaglercraft.internal.IAudioHandle;
 import net.lax1dude.eaglercraft.internal.IAudioResource;
 import net.lax1dude.eaglercraft.internal.PlatformAudio;
-import net.lax1dude.eaglercraft.internal.vfs2.VFile2;
 import net.minecraft.client.GameSettings;
 import net.minecraft.game.entity.EntityLiving;
-import util.MathHelper;
+import net.peyton.eagler.minecraft.AudioUtils;
 
-public final class SoundManager {
-	private SoundPool soundPoolSounds = new SoundPool();
-	private SoundPool soundPoolMusic = new SoundPool();
-	private int latestSoundID = 0;
+public class SoundManager {
 	private GameSettings options;
-	private boolean loaded = false;
-
+	private Random rand = new Random();
+	private int field_583_i = this.rand.nextInt(12000);
+	
+	private Map<String, IAudioResource> sounds = new HashMap<String, IAudioResource>();
+	private Map<String, IAudioResource> music = new HashMap<String, IAudioResource>();
+	
 	private IAudioHandle musicHandle;
+	
+	private String[] newMusic = new String[]{"hal1.ogg", "hal2.ogg", "hal3.ogg", "hal4.ogg", "nuance1.ogg", "nuance2.ogg", "piano1.ogg", "piano2.ogg", "piano3.ogg"};
 
-	public final void loadSoundSettings(GameSettings var1) {
+	public void loadSoundSettings(GameSettings var1) {
 		this.options = var1;
-		if(!this.loaded && (var1.sound || var1.music)) {
-			this.tryToSetLibraryAndCodecs();
-		}
 	}
 
-	private void tryToSetLibraryAndCodecs() {
-		boolean var1 = this.options.sound;
-		boolean var2 = this.options.music;
-		this.options.sound = false;
-		this.options.music = false;
-		this.options.saveOptions();
-		this.options.sound = var1;
-		this.options.music = var2;
-		this.options.saveOptions();
-		this.loaded = true;
-	}
-
-	public final void onSoundOptionsChanged() {
-		if(!this.loaded && (this.options.sound || this.options.music)) {
-			this.tryToSetLibraryAndCodecs();
-		}
-		if (this.musicHandle != null && !this.musicHandle.shouldFree()) {
-			if(!this.options.music) {
+	public void onSoundOptionsChanged() {
+		if(this.options.music) {
+			if(this.musicHandle != null && !this.musicHandle.shouldFree()) {
 				musicHandle.end();
-			} else {
+			}
+		} else {
+			if(this.musicHandle != null && !this.musicHandle.shouldFree()) {
 				musicHandle.gain(1.0F);
 			}
 		}
+
 	}
 
-	public final void closeMinecraft() {
-		if(musicHandle != null && !musicHandle.shouldFree()) {
-			musicHandle.end();
-		}
-		musicHandle = null;
+	public void closeMinecraft() {
 	}
 
-	public final void addSound(String var1, VFile2 var2) {
-		this.soundPoolSounds.addSound(var1, var2);
-	}
-
-	public final void addMusic(String var1, VFile2 var2) {
-		this.soundPoolMusic.addSound(var1, var2);
-	}
-
-	public final void playRandomMusicIfReady(float var1, float var2, float var3) {
-		if(this.loaded && this.options.music) {
+	public void playRandomMusicIfReady() {
+		if(this.options.music) {
 			if(this.musicHandle == null || this.musicHandle.shouldFree()) {
-				SoundPoolEntry var4 = this.soundPoolMusic.getRandomSoundFromSoundPool("calm");
-				if (var4 != null) {
-					IAudioResource trk = PlatformAudio.loadAudioDataNew("/music/" + var4.soundName, false, browserResourceLoader);
-					if (trk != null) {
-						this.musicHandle = PlatformAudio.beginPlaybackStatic(trk, 1.0F, 1.0F, false);
+				if(this.field_583_i > 0) {
+					--this.field_583_i;
+					return;
+				}
+
+				int var1 = rand.nextInt(newMusic.length);
+				this.field_583_i = this.rand.nextInt(12000) + 12000;
+				String name = "/music/" + newMusic[var1];
+				
+				IAudioResource trk = this.music.get(name);
+				if (trk == null) {
+					if (EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
+						trk = PlatformAudio.loadAudioDataNew(name, false, browserResourceLoader);
+					} else {
+						trk = PlatformAudio.loadAudioData(name, false);
 					}
+					if (trk != null) {
+						music.put(name, trk);
+					}
+				}
+				
+				if (trk != null) {
+					musicHandle = PlatformAudio.beginPlaybackStatic(trk, 1.0f, 1.0f, false);
 				}
 			}
 		}
 	}
 
-	public final void setListener(EntityLiving var1, float var2) {
-		if(this.loaded && this.options.sound && var1 != null) {
+	public void setListener(EntityLiving var1, float var2) {
+		if (var1 != null && this.options.sound) {
 			try {
 				float var9 = var1.prevRotationPitch + (var1.rotationPitch - var1.prevRotationPitch) * var2;
 				float var3 = var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var2;
@@ -97,36 +94,71 @@ public final class SoundManager {
 		}
 	}
 
-	public final void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
-		if(this.loaded && this.options.sound) {
-			SoundPoolEntry var9 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
-			if(var9 != null && var5 > 0.0F) {
-				this.latestSoundID = (this.latestSoundID + 1) % 256;
-				float gain = MathHelper.clamp_float(var5, 0.0F, 1.0F);
-				IAudioResource sfx = PlatformAudio.loadAudioDataNew("/sounds/" + var9.soundName, false, browserResourceLoader);
-				if(sfx != null) {
-					PlatformAudio.beginPlaybackStatic(sfx, gain, var6, false);
+	public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
+		if(this.options.sound) {
+			if(var5 > 0.0F) {
+				IAudioResource trk;
+				if(var1 == null) return;
+				
+				String sound = AudioUtils.getSound(var1);
+				if(sound == null) {
+					return;
+				}
+				trk = this.sounds.get(sound);
+				if (trk == null) {
+					if (EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
+						trk = PlatformAudio.loadAudioDataNew(sound, true, browserResourceLoader);
+					} else {
+						trk = PlatformAudio.loadAudioData(sound, true);
+					}
+					if (trk != null) {
+						sounds.put(sound, trk);
+					}
+				}
+				
+				if(trk != null) {
+					PlatformAudio.beginPlayback(trk, var2, var3, var4, var5 * 1.0f, var6, false);
 				}
 			}
 		}
 	}
 
-	public final void playSoundFX(String var1, float var2, float var3) {
-		if(this.loaded && this.options.sound) {
-			SoundPoolEntry var4 = this.soundPoolSounds.getRandomSoundFromSoundPool(var1);
-			if(var4 != null) {
-				this.latestSoundID = (this.latestSoundID + 1) % 256;
-				IAudioResource sfx = PlatformAudio.loadAudioDataNew("/sounds/" + var4.soundName, false, browserResourceLoader);
-				if(sfx != null) {
-					PlatformAudio.beginPlaybackStatic(sfx, 0.25F, var3, false);
+	public void playSoundFX(String var1, float var2, float var3) {
+		if(this.options.sound) {
+			
+			if(var2 > 1.0F) {
+				var2 = 1.0F;
+			}
+			var2 *= 0.25F;
+			
+			IAudioResource trk;
+			if(var1 == null) return;
+			
+			String sound = AudioUtils.getSound(var1);
+			if(sound == null) {
+				return;
+			}
+			trk = this.sounds.get(sound);
+			if (trk == null) {
+				if (EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
+					trk = PlatformAudio.loadAudioDataNew(sound, true, browserResourceLoader);
+				} else {
+					trk = PlatformAudio.loadAudioData(sound, true);
 				}
+				if (trk != null) {
+					sounds.put(sound, trk);
+				}
+			}
+			
+			if(trk != null) {
+				PlatformAudio.beginPlaybackStatic(trk, var2 * 1.0f, var3, false);
 			}
 		}
 	}
-
+	
 	private final IAudioCacheLoader browserResourceLoader = filename -> {
 		try {
-			return EaglerInputStream.inputStreamToBytesQuiet(EagRuntime.getResourceStream(filename));
+			return EaglerInputStream.inputStreamToBytesQuiet(EagRuntime.getRequiredResourceStream(filename));
 		} catch (Throwable t) {
 			return null;
 		}
