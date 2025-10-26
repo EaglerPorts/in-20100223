@@ -17,7 +17,7 @@ public class GuiButton extends Gui {
 		this(var1, var2, var3, 200, 20, var4);
 	}
 
-	protected GuiButton(int var1, int var2, int var3, int var4, int var5, String var6) {
+	public GuiButton(int var1, int var2, int var3, int var4, int var5, String var6) {
 		this.width = 200;
 		this.height = 20;
 		this.enabled = true;
