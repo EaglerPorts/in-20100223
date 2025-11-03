@@ -197,8 +197,6 @@ public final class EntityRenderer {
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 			this.mc.currentScreen.drawScreen(var5, var6, var1);
 		}
-
-		Display.update();
 	}
 
 	/* public final void grabLargeScreenshot() {

@@ -1,8 +1,11 @@
 package net.minecraft.client.gui;
 
 import dev.colbster937.eaglercraft.LevelUtils;
+import util.MathHelper;
 
 public final class GuiIngameMenu extends GuiScreen {
+	private int updateCounter = 0;
+
 	public final void initGui() {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4, "Options..."));
@@ -47,10 +50,16 @@ public final class GuiIngameMenu extends GuiScreen {
 	public final void drawScreen(int var1, int var2, float var3) {
 		this.drawDefaultBackground();
 		drawCenteredString(this.fontRenderer, "Game menu", this.width / 2, 40, 16777215);
+		if(!LevelUtils.levelSaved) {
+			float var5 = ((float)(this.updateCounter % 10) + var3) / 10.0F;
+			var5 = MathHelper.sin(var5 * (float)Math.PI * 2.0F) * 0.2F + 0.8F;
+			int var6 = (int)(255.0F * var5);
+			this.drawString(this.fontRenderer, "Saving level..", 8, this.height - 16, var6 << 16 | var6 << 8 | var6);
+		}
 		super.drawScreen(var1, var2, var3);
 	}
 
 	public void updateScreen() {
-		LevelUtils.tick();
+		LevelUtils.tick(++this.updateCounter);
 	}
 }

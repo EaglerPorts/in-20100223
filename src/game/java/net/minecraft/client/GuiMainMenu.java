@@ -33,12 +33,12 @@ public final class GuiMainMenu extends GuiScreen {
 		b.enabled = LevelUtils.savedLevel();
 		this.controlList.add(b = new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, "Play tutorial level"));
 		b.enabled = false;
-		this.controlList.add(b = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, 98, 20, "Options..."));
-		this.controlList.add(b = new GuiButton(4, this.width / 2 + 2, this.height / 4 + 120 + 12, 98, 20, "Github"));
-		((GuiButton)this.controlList.get(2)).enabled = false;
+		this.controlList.add(b = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, 98, 20, "Options..."));
+		this.controlList.add(b = new GuiButton(4, this.width / 2 + 2, this.height / 4 + 120, 98, 20, "Github"));
+		/* ((GuiButton)this.controlList.get(2)).enabled = false;
 		if(this.mc.session == null) {
 			((GuiButton)this.controlList.get(1)).enabled = false;
-		}
+		} */
 
 	}
 
@@ -88,7 +88,8 @@ public final class GuiMainMenu extends GuiScreen {
 		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, 12, 8421504);
 		String[] ts = EaglercraftVersion.getTitleString();
 		drawString(this.fontRenderer, ts[0], 2, this.height - 10, 16777215);
-		drawString(this.fontRenderer, ts[1], 2, 2, 8421504);
+		drawString(this.fontRenderer, ts[1], 2, this.height - 20, 16777215);
+		// drawString(this.fontRenderer, ts[1], 2, 2, 8421504);
 		super.drawScreen(var1, var2, var3);
 	}
 }

@@ -81,6 +81,7 @@ public final class Minecraft implements Runnable {
 	private TextureLavaFX textureLavaFX;
 	volatile boolean running;
 	public String debug;
+	public int fps;
 	public boolean inventoryScreen;
 	private int prevFrameTime;
 	public boolean inGameHasFocus;
@@ -111,8 +112,12 @@ public final class Minecraft implements Runnable {
 		return mc;
 	}
 
-	private void updateDisplay() {
-		if (Display.isVSyncSupported()) Display.setVSync(true);
+	public void updateDisplay() {
+		if (Display.isVSyncSupported()) {
+			if (this.theWorld == null || this.currentScreen != null) Display.setVSync(true);
+			else Display.setVSync(this.options.vsync);
+		}
+		Display.update();
 		if (Display.wasResized()) this.resize(Display.getWidth(), Display.getHeight());
 	}
 
@@ -155,7 +160,7 @@ public final class Minecraft implements Runnable {
 		this.running = true;
 
 		try {
-			Display.setTitle("Minecraft Minecraft Indev");
+			Display.setTitle("Minecraft Indev");
 
 			IntBuffer var24;
 
@@ -243,12 +248,8 @@ public final class Minecraft implements Runnable {
 					this.playerController.setPartialTime(this.timer.renderPartialTicks);
 					this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks);
 
-					this.updateDisplay();
 					this.screenshotListener();
-
-					if(this.options.limitFramerate) {
-						EagUtils.sleep(5L);
-					}
+					this.updateDisplay();
 
 					++var28;
 					this.isGamePaused = this.currentScreen != null && this.currentScreen.doesGuiPauseGame();
@@ -260,6 +261,7 @@ public final class Minecraft implements Runnable {
 
 				while(System.currentTimeMillis() >= var23 + 1000L) {
 					this.debug = var28 + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
+					this.fps = var28;
 					WorldRenderer.chunksUpdated = 0;
 					var23 += 1000L;
 					var28 = 0;
@@ -558,7 +560,7 @@ public final class Minecraft implements Runnable {
 									// 	this.entityRenderer.grabLargeScreenshot();
 									// }
 
-									if(this.playerController instanceof PlayerControllerCreative) {
+									/* if(this.playerController instanceof PlayerControllerCreative) {
 										if(Keyboard.getEventKey() == this.options.keyBindLoad.keyCode) {
 											this.thePlayer.preparePlayerToSpawn();
 										}
@@ -567,7 +569,7 @@ public final class Minecraft implements Runnable {
 											this.theWorld.setSpawnLocation((int)this.thePlayer.posX, (int)this.thePlayer.posY, (int)this.thePlayer.posZ, this.thePlayer.rotationYaw);
 											this.thePlayer.preparePlayerToSpawn();
 										}
-									}
+									} */
 
 									if(Keyboard.getEventKey() == Keyboard.KEY_F5) {
 										this.options.thirdPersonView = !this.options.thirdPersonView;
@@ -586,10 +588,6 @@ public final class Minecraft implements Runnable {
 									if(Keyboard.getEventKey() == var1 + 2) {
 										this.thePlayer.inventory.currentItem = var1;
 									}
-								}
-
-								if(Keyboard.getEventKey() == this.options.keyBindToggleFog.keyCode) {
-									this.options.setOptionValue(4, !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) ? 1 : -1);
 								}
 							}
 						}
