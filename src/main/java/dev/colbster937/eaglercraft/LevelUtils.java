@@ -59,10 +59,11 @@ public class LevelUtils {
     }
   }
 
-  public static void load() {
-    if (savedLevel())
+  public static void load(boolean upload) {
+    if (!upload && savedLevel())
       loadLevel(lf.getAllBytes());
-    // EagRuntime.displayFileChooser("minecraft/mclevel", ".mclevel");
+    else if (upload)
+      EagRuntime.displayFileChooser("minecraft/mclevel", ".mclevel");
   }
 
   private static void loadLevel(byte[] data) {
@@ -79,8 +80,10 @@ public class LevelUtils {
   }
 
   public static void tick(int i) {
-    if (i == 1) levelSaved = false;
-		else if (i == 20) save(false);
+    if (i == 1)
+      levelSaved = false;
+    else if (i == 20)
+      save(false);
     if (EagRuntime.fileChooserHasResult()) {
       FileChooserResult result = EagRuntime.getFileChooserResult();
       if (result.fileName.endsWith(".mclevel")) {

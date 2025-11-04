@@ -10,8 +10,8 @@ public final class GuiIngameMenu extends GuiScreen {
 		this.controlList.clear();
 		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4, "Options..."));
 		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 24, "Generate new level..."));
-		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 48, "Save level.."));
-		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 72, /* "Load */ "Export level.."));
+		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 48, /* "Save */ "Export level.."));
+		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 72, /* "Load */ "Import level.."));
 		this.controlList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 120, "Back to game"));
 		if(this.mc.session == null) {
 			((GuiButton)this.controlList.get(2)).enabled = false;
@@ -31,12 +31,11 @@ public final class GuiIngameMenu extends GuiScreen {
 
 		if(this.mc.session != null) {
 			if(var1.id == 2) {
-				LevelUtils.save();
+				LevelUtils.export();
 			}
 
 			if(var1.id == 3) {
-				LevelUtils.export();
-				// LevelUtils.load();
+				LevelUtils.load(true);
 			}
 		}
 

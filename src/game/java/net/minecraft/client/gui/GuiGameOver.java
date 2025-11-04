@@ -29,7 +29,7 @@ public final class GuiGameOver extends GuiScreen {
 		}
 
 		if(this.mc.session != null && var1.id == 2) {
-			LevelUtils.load();
+			LevelUtils.load(false);
 		}
 
 	}

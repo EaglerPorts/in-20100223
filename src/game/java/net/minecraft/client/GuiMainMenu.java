@@ -31,8 +31,8 @@ public final class GuiMainMenu extends GuiScreen {
 		this.controlList.add(b = new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Generate new level..."));
 		this.controlList.add(b = new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, "Load level.."));
 		b.enabled = LevelUtils.savedLevel();
-		this.controlList.add(b = new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, "Play tutorial level"));
-		b.enabled = false;
+		this.controlList.add(b = new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, "Import level.."));
+		// b.enabled = false;
 		this.controlList.add(b = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, 98, 20, "Options..."));
 		this.controlList.add(b = new GuiButton(4, this.width / 2 + 2, this.height / 4 + 120, 98, 20, "Github"));
 		/* ((GuiButton)this.controlList.get(2)).enabled = false;
@@ -52,7 +52,11 @@ public final class GuiMainMenu extends GuiScreen {
 		}
 
 		if(this.mc.session != null && var1.id == 2) {
-			LevelUtils.load();
+			LevelUtils.load(false);
+		}
+
+		if(this.mc.session != null && var1.id == 3) {
+			LevelUtils.load(true);
 		}
 
 		if(var1.id == 4) {
