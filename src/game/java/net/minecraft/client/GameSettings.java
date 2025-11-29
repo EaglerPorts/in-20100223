@@ -26,7 +26,9 @@ public final class GameSettings {
 	public KeyBinding keyBindInventory = new KeyBinding("Inventory", 23);
 	public KeyBinding keyBindDrop = new KeyBinding("Drop", 16);
 	public KeyBinding keyBindZoom = new KeyBinding("Zoom", Keyboard.KEY_C);
-	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindDrop, this.keyBindInventory, this.keyBindZoom};
+	public KeyBinding keyBindChat = new KeyBinding("Chat", Keyboard.KEY_T);
+	public KeyBinding keyBindCommand = new KeyBinding("Command", Keyboard.KEY_SLASH);
+	public KeyBinding[] keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindDrop, this.keyBindInventory, this.keyBindZoom, this.keyBindChat, this.keyBindCommand};
 	private Minecraft mc;
 	private VFile2 optionsFile;
 	public int numberOfOptions = 11;

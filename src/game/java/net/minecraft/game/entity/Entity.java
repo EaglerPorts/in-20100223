@@ -94,7 +94,7 @@ public abstract class Entity {
 		this.height = var2;
 	}
 
-	protected final void setPosition(float var1, float var2, float var3) {
+	public final void setPosition(float var1, float var2, float var3) {
 		this.posX = var1;
 		this.posY = var2;
 		this.posZ = var3;

@@ -14,6 +14,8 @@ import net.minecraft.game.entity.player.InventoryPlayer;
 import net.minecraft.game.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
+import dev.colbster937.eaglercraft.gui.GuiChat;
+
 public final class GuiIngame extends Gui {
 	private static RenderItem itemRenderer = new RenderItem();
 	private List chatMessageList = new ArrayList();
@@ -174,12 +176,53 @@ public final class GuiIngame extends Gui {
 			if (this.mc.options.showCoords) var4.drawStringWithShadow("x: " + (int) Math.floor(this.mc.thePlayer.posX) + ", y: " + (int) Math.floor(this.mc.thePlayer.posY) + ", z: " + (int) Math.floor(this.mc.thePlayer.posZ), 2, 12, 16777215);
 		}
 
-		for(var12 = 0; var12 < this.chatMessageList.size() && var12 < 10; ++var12) {
-			if(((ChatLine)this.chatMessageList.get(var12)).updateCounter < 200) {
-				this.chatMessageList.get(var12);
-				var4.drawStringWithShadow((String)null, 2, var19 - 8 - var12 * 9 - 20, 16777215);
+		String var23;
+		int var26 = 10;
+		boolean var28 = false;
+		if(this.mc.currentScreen instanceof GuiChat) {
+			var26 = 20;
+			var28 = true;
+		}
+
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		GL11.glPushMatrix();
+		GL11.glTranslatef(0.0F, (float)(var19 - 48), 0.0F);
+
+		for(int var17 = 0; var17 < this.chatMessageList.size() && var17 < var26; ++var17) {
+			if(((ChatLine)this.chatMessageList.get(var17)).updateCounter < 200 || var28) {
+				double var31 = (double)((ChatLine)this.chatMessageList.get(var17)).updateCounter / 200.0D;
+				var31 = 1.0D - var31;
+				var31 *= 10.0D;
+				if(var31 < 0.0D) {
+					var31 = 0.0D;
+				}
+
+				if(var31 > 1.0D) {
+					var31 = 1.0D;
+				}
+
+				var31 *= var31;
+				int var21 = (int)(255.0D * var31);
+				if(var28) {
+					var21 = 255;
+				}
+
+				if(var21 > 0) {
+					byte var32 = 2;
+					int var22 = -var17 * 9;
+					var23 = ((ChatLine)this.chatMessageList.get(var17)).message;
+					this.drawRect(var32, var22 - 1, var32 + 320, var22 + 8, var21 / 2 << 24);
+					GL11.glEnable(GL11.GL_BLEND);
+					var4.drawStringWithShadow(var23, var32, var22, 16777215 + (var21 << 24));
+				}
 			}
 		}
+
+		GL11.glPopMatrix();
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		GL11.glDisable(GL11.GL_BLEND);
 
 	}
 
@@ -188,6 +231,24 @@ public final class GuiIngame extends Gui {
 
 		for(int var1 = 0; var1 < this.chatMessageList.size(); ++var1) {
 			++((ChatLine)this.chatMessageList.get(var1)).updateCounter;
+		}
+
+	}
+
+	public void addChatMessage(String var1) {
+		while(this.mc.fontRenderer.getStringWidth(var1) > 320) {
+			int var2;
+			for(var2 = 1; var2 < var1.length() && this.mc.fontRenderer.getStringWidth(var1.substring(0, var2 + 1)) <= 320; ++var2) {
+			}
+
+			this.addChatMessage(var1.substring(0, var2));
+			var1 = var1.substring(var2);
+		}
+
+		this.chatMessageList.add(0, new ChatLine(var1));
+
+		while(this.chatMessageList.size() > 50) {
+			this.chatMessageList.remove(this.chatMessageList.size() - 1);
 		}
 
 	}
