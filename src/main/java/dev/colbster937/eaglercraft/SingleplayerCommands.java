@@ -6,6 +6,7 @@ import dev.colbster937.eaglercraft.command.Command;
 import dev.colbster937.eaglercraft.command.GiveCommand;
 import dev.colbster937.eaglercraft.command.HelpCommand;
 import dev.colbster937.eaglercraft.command.TeleportCommand;
+import dev.colbster937.eaglercraft.command.TimeCommand;
 import net.lax1dude.eaglercraft.HString;
 import net.minecraft.client.Minecraft;
 
@@ -52,5 +53,6 @@ public class SingleplayerCommands {
     commands.add(new HelpCommand());
     commands.add(new TeleportCommand());
     commands.add(new GiveCommand());
+    commands.add(new TimeCommand());
   }
 }
