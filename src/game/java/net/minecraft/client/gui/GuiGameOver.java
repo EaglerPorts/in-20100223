@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import net.minecraft.client.player.EntityPlayerSP;
 import org.lwjgl.opengl.GL11;
 
+import dev.colbster937.eaglercraft.FormattingCodes;
 import dev.colbster937.eaglercraft.LevelUtils;
 
 public final class GuiGameOver extends GuiScreen {
@@ -29,7 +30,7 @@ public final class GuiGameOver extends GuiScreen {
 		}
 
 		if(this.mc.session != null && var1.id == 2) {
-			LevelUtils.load(false);
+			LevelUtils.load(true);
 		}
 
 	}
@@ -41,7 +42,7 @@ public final class GuiGameOver extends GuiScreen {
 		drawCenteredString(this.fontRenderer, "Game over!", this.width / 2 / 2, 30, 16777215);
 		GL11.glPopMatrix();
 		FontRenderer var10000 = this.fontRenderer;
-		StringBuilder var10001 = (new StringBuilder()).append("Score: &e");
+		StringBuilder var10001 = (new StringBuilder()).append("Score: " + FormattingCodes.YELLOW);
 		EntityPlayerSP var4 = this.mc.thePlayer;
 		drawCenteredString(var10000, var10001.append(var4.getScore).toString(), this.width / 2, 100, 16777215);
 		super.drawScreen(var1, var2, var3);

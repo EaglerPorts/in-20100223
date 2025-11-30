@@ -284,7 +284,7 @@ public final class Minecraft implements Runnable {
 		if(Display.isActive()) {
 			if(!this.inventoryScreen) {
 				this.inventoryScreen = true;
-				this.mouseHelper.grabMouseCursor();
+				if (this.currentScreen == null) this.mouseHelper.grabMouseCursor();
 				this.displayGuiScreen((GuiScreen)null);
 				this.prevFrameTime = this.ticksRan + 10000;
 			}
