@@ -1,7 +1,7 @@
 package net.minecraft.game.level.generator;
 
 import java.util.ArrayList;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.game.level.MobSpawner;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;

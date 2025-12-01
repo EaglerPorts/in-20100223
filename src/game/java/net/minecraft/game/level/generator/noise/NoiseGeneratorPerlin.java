@@ -1,6 +1,6 @@
 package net.minecraft.game.level.generator.noise;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import util.MathHelper;
 
 public final class NoiseGeneratorPerlin extends NoiseGenerator {

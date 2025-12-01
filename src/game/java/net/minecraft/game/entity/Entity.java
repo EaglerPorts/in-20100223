@@ -4,7 +4,7 @@ import com.mojang.nbt.NBTTagCompound;
 import com.mojang.nbt.NBTTagFloat;
 import com.mojang.nbt.NBTTagList;
 import java.util.ArrayList;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.game.entity.misc.EntityItem;
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;

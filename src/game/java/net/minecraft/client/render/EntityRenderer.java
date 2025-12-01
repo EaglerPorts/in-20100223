@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.List;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 
 import net.lax1dude.eaglercraft.internal.buffer.ByteBuffer;
 import net.lax1dude.eaglercraft.internal.buffer.FloatBuffer;

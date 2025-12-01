@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import java.util.TreeSet;
 import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityLiving;

@@ -2,7 +2,7 @@ package net.minecraft.client.effect;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.game.entity.Entity;

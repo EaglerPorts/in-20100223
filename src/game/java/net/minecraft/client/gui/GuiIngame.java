@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 
 import net.lax1dude.eaglercraft.EagRuntime;
 import net.minecraft.client.ChatLine;

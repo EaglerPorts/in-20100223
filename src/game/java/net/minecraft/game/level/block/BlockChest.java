@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.InventoryLargeChest;
 import net.minecraft.game.entity.misc.EntityItem;

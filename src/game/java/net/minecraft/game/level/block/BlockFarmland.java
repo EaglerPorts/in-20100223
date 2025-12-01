@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 import net.minecraft.game.physics.AxisAlignedBB;

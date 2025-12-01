@@ -1,6 +1,6 @@
 package net.minecraft.client.render.entity;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityPainting;

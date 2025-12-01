@@ -1,6 +1,6 @@
 package net.minecraft.client.render.entity;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.render.RenderBlocks;
 import net.minecraft.client.render.RenderEngine;

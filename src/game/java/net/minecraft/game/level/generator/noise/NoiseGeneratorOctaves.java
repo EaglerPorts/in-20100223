@@ -1,6 +1,6 @@
 package net.minecraft.game.level.generator.noise;
 
-import net.lax1dude.eaglercraft;
+import net.lax1dude.eaglercraft.Random;
 
 public final class NoiseGeneratorOctaves extends NoiseGenerator {
 	private NoiseGeneratorPerlin[] generatorCollection;
