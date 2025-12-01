@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import net.minecraft.game.entity.misc.EntityItem;
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.entity.player.InventoryPlayer;
@@ -109,8 +109,9 @@ public class Block {
 	protected Block(int var1, Material var2) {
 		this.stepSound = soundPowderFootstep;
 		this.blockParticleGravity = 1.0F;
-		if(blocksList[var1] != null) {
-			throw new IllegalArgumentException("Slot " + var1 + " is already occupied by " + blocksList[var1] + " when adding " + this);
+		if (blocksList[var1] != null) {
+			throw new IllegalArgumentException(
+					"Slot " + var1 + " is already occupied by " + blocksList[var1] + " when adding " + this);
 		} else {
 			this.material = var2;
 			blocksList[var1] = this;
@@ -134,7 +135,7 @@ public class Block {
 	}
 
 	private Block setLightValue(float var1) {
-		lightValue[this.blockID] = (int)(15.0F * var1);
+		lightValue[this.blockID] = (int) (15.0F * var1);
 		return this;
 	}
 
@@ -153,7 +154,7 @@ public class Block {
 
 	protected final Block setHardness(float var1) {
 		this.hardness = var1;
-		if(this.resistance < var1 * 5.0F) {
+		if (this.resistance < var1 * 5.0F) {
 			this.resistance = var1 * 5.0F;
 		}
 
@@ -194,11 +195,13 @@ public class Block {
 	}
 
 	public final AxisAlignedBB getSelectedBoundingBoxFromPool(int var1, int var2, int var3) {
-		return new AxisAlignedBB((float)var1 + this.minX, (float)var2 + this.minY, (float)var3 + this.minZ, (float)var1 + this.maxX, (float)var2 + this.maxY, (float)var3 + this.maxZ);
+		return new AxisAlignedBB((float) var1 + this.minX, (float) var2 + this.minY, (float) var3 + this.minZ,
+				(float) var1 + this.maxX, (float) var2 + this.maxY, (float) var3 + this.maxZ);
 	}
 
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(int var1, int var2, int var3) {
-		return new AxisAlignedBB((float)var1 + this.minX, (float)var2 + this.minY, (float)var3 + this.minZ, (float)var1 + this.maxX, (float)var2 + this.maxY, (float)var3 + this.maxZ);
+		return new AxisAlignedBB((float) var1 + this.minX, (float) var2 + this.minY, (float) var3 + this.minZ,
+				(float) var1 + this.maxX, (float) var2 + this.maxY, (float) var3 + this.maxZ);
 	}
 
 	public boolean isOpaqueCube() {
@@ -240,24 +243,24 @@ public class Block {
 	}
 
 	public final float blockStrength(EntityPlayer var1) {
-		if(this.hardness < 0.0F) {
+		if (this.hardness < 0.0F) {
 			return 0.0F;
-		} else if(!var1.canHarvestBlock(this)) {
+		} else if (!var1.canHarvestBlock(this)) {
 			return 1.0F / this.hardness / 100.0F;
 		} else {
 			InventoryPlayer var2 = var1.inventory;
 			float var4 = 1.0F;
-			if(var2.mainInventory[var2.currentItem] != null) {
+			if (var2.mainInventory[var2.currentItem] != null) {
 				ItemStack var5 = var2.mainInventory[var2.currentItem];
 				var4 = 1.0F * var5.getItem().getStrVsBlock(this);
 			}
 
 			float var6 = var4;
-			if(var1.isInsideOfWater()) {
+			if (var1.isInsideOfWater()) {
 				var6 = var4 / 5.0F;
 			}
 
-			if(!var1.onGround) {
+			if (!var1.onGround) {
 				var6 /= 5.0F;
 			}
 
@@ -272,14 +275,15 @@ public class Block {
 	public final void dropBlockAsItemWithChance(World var1, int var2, int var3, int var4, int var5, float var6) {
 		int var7 = this.quantityDropped(var1.random);
 
-		for(int var8 = 0; var8 < var7; ++var8) {
-			if(var1.random.nextFloat() <= var6) {
+		for (int var8 = 0; var8 < var7; ++var8) {
+			if (var1.random.nextFloat() <= var6) {
 				int var9 = this.idDropped(var5, var1.random);
-				if(var9 > 0) {
+				if (var9 > 0) {
 					float var10 = var1.random.nextFloat() * 0.7F + 0.15F;
 					float var11 = var1.random.nextFloat() * 0.7F + 0.15F;
 					float var12 = var1.random.nextFloat() * 0.7F + 0.15F;
-					EntityItem var13 = new EntityItem(var1, (float)var2 + var10, (float)var3 + var11, (float)var4 + var12, new ItemStack(var9));
+					EntityItem var13 = new EntityItem(var1, (float) var2 + var10, (float) var3 + var11, (float) var4 + var12,
+							new ItemStack(var9));
 					var13.delayBeforeCanPickup = 10;
 					var1.spawnEntityInWorld(var13);
 				}
@@ -293,105 +297,109 @@ public class Block {
 	}
 
 	public MovingObjectPosition collisionRayTrace(World var1, int var2, int var3, int var4, Vec3D var5, Vec3D var6) {
-		var5 = var5.addVector((float)(-var2), (float)(-var3), (float)(-var4));
-		var6 = var6.addVector((float)(-var2), (float)(-var3), (float)(-var4));
+		var5 = var5.addVector((float) (-var2), (float) (-var3), (float) (-var4));
+		var6 = var6.addVector((float) (-var2), (float) (-var3), (float) (-var4));
 		Vec3D var12 = var5.getIntermediateWithXValue(var6, this.minX);
 		Vec3D var7 = var5.getIntermediateWithXValue(var6, this.maxX);
 		Vec3D var8 = var5.getIntermediateWithYValue(var6, this.minY);
 		Vec3D var9 = var5.getIntermediateWithYValue(var6, this.maxY);
 		Vec3D var10 = var5.getIntermediateWithZValue(var6, this.minZ);
 		var6 = var5.getIntermediateWithZValue(var6, this.maxZ);
-		if(!this.isVecInsideYZBounds(var12)) {
+		if (!this.isVecInsideYZBounds(var12)) {
 			var12 = null;
 		}
 
-		if(!this.isVecInsideYZBounds(var7)) {
+		if (!this.isVecInsideYZBounds(var7)) {
 			var7 = null;
 		}
 
-		if(!this.isVecInsideXZBounds(var8)) {
+		if (!this.isVecInsideXZBounds(var8)) {
 			var8 = null;
 		}
 
-		if(!this.isVecInsideXZBounds(var9)) {
+		if (!this.isVecInsideXZBounds(var9)) {
 			var9 = null;
 		}
 
-		if(!this.isVecInsideXYBounds(var10)) {
+		if (!this.isVecInsideXYBounds(var10)) {
 			var10 = null;
 		}
 
-		if(!this.isVecInsideXYBounds(var6)) {
+		if (!this.isVecInsideXYBounds(var6)) {
 			var6 = null;
 		}
 
 		Vec3D var11 = null;
-		if(var12 != null) {
+		if (var12 != null) {
 			var11 = var12;
 		}
 
-		if(var7 != null && (var11 == null || var5.distance(var7) < var5.distance(var11))) {
+		if (var7 != null && (var11 == null || var5.distance(var7) < var5.distance(var11))) {
 			var11 = var7;
 		}
 
-		if(var8 != null && (var11 == null || var5.distance(var8) < var5.distance(var11))) {
+		if (var8 != null && (var11 == null || var5.distance(var8) < var5.distance(var11))) {
 			var11 = var8;
 		}
 
-		if(var9 != null && (var11 == null || var5.distance(var9) < var5.distance(var11))) {
+		if (var9 != null && (var11 == null || var5.distance(var9) < var5.distance(var11))) {
 			var11 = var9;
 		}
 
-		if(var10 != null && (var11 == null || var5.distance(var10) < var5.distance(var11))) {
+		if (var10 != null && (var11 == null || var5.distance(var10) < var5.distance(var11))) {
 			var11 = var10;
 		}
 
-		if(var6 != null && (var11 == null || var5.distance(var6) < var5.distance(var11))) {
+		if (var6 != null && (var11 == null || var5.distance(var6) < var5.distance(var11))) {
 			var11 = var6;
 		}
 
-		if(var11 == null) {
+		if (var11 == null) {
 			return null;
 		} else {
 			byte var13 = -1;
-			if(var11 == var12) {
+			if (var11 == var12) {
 				var13 = 4;
 			}
 
-			if(var11 == var7) {
+			if (var11 == var7) {
 				var13 = 5;
 			}
 
-			if(var11 == var8) {
+			if (var11 == var8) {
 				var13 = 0;
 			}
 
-			if(var11 == var9) {
+			if (var11 == var9) {
 				var13 = 1;
 			}
 
-			if(var11 == var10) {
+			if (var11 == var10) {
 				var13 = 2;
 			}
 
-			if(var11 == var6) {
+			if (var11 == var6) {
 				var13 = 3;
 			}
 
-			return new MovingObjectPosition(var2, var3, var4, var13, var11.addVector((float)var2, (float)var3, (float)var4));
+			return new MovingObjectPosition(var2, var3, var4, var13,
+					var11.addVector((float) var2, (float) var3, (float) var4));
 		}
 	}
 
 	private boolean isVecInsideYZBounds(Vec3D var1) {
-		return var1 == null ? false : var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+		return var1 == null ? false
+				: var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
 	}
 
 	private boolean isVecInsideXZBounds(Vec3D var1) {
-		return var1 == null ? false : var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
+		return var1 == null ? false
+				: var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
 	}
 
 	private boolean isVecInsideXYBounds(Vec3D var1) {
-		return var1 == null ? false : var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.yCoord >= this.minY && var1.yCoord <= this.maxY;
+		return var1 == null ? false
+				: var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.yCoord >= this.minY && var1.yCoord <= this.maxY;
 	}
 
 	public void onBlockDestroyedByExplosion(World var1, int var2, int var3, int var4) {
@@ -425,7 +433,7 @@ public class Block {
 		var1 = soundGrassFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		grass = (BlockGrass)var0;
+		grass = (BlockGrass) var0;
 		var10000 = (new BlockDirt(3, 2)).setHardness(0.5F);
 		var1 = soundGravelFootstep;
 		var0 = var10000;
@@ -584,22 +592,22 @@ public class Block {
 		var1 = soundGrassFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		plantYellow = (BlockFlower)var0;
+		plantYellow = (BlockFlower) var0;
 		var10000 = (new BlockFlower(38, 12)).setHardness(0.0F);
 		var1 = soundGrassFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		plantRed = (BlockFlower)var0;
+		plantRed = (BlockFlower) var0;
 		var10000 = (new BlockMushroom(39, 29)).setHardness(0.0F);
 		var1 = soundGrassFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		mushroomBrown = (BlockFlower)var0.setLightValue(2.0F / 16.0F);
+		mushroomBrown = (BlockFlower) var0.setLightValue(2.0F / 16.0F);
 		var10000 = (new BlockMushroom(40, 28)).setHardness(0.0F);
 		var1 = soundGrassFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		mushroomRed = (BlockFlower)var0;
+		mushroomRed = (BlockFlower) var0;
 		var10000 = (new BlockOreBlock(41, 39)).setHardness(3.0F).setResistance(10.0F);
 		var1 = soundMetalFootstep;
 		var0 = var10000;
@@ -654,7 +662,7 @@ public class Block {
 		var1 = soundWoodFootstep;
 		var0 = var10000;
 		var0.stepSound = var1;
-		fire = (BlockFire)var0;
+		fire = (BlockFire) var0;
 		var10000 = (new BlockSource(52, waterMoving.blockID)).setHardness(0.0F);
 		var1 = soundWoodFootstep;
 		var0 = var10000;
@@ -711,8 +719,8 @@ public class Block {
 		var0.stepSound = var1;
 		stoneOvenActive = var0.setLightValue(14.0F / 16.0F);
 
-		for(int var2 = 0; var2 < 256; ++var2) {
-			if(blocksList[var2] != null) {
+		for (int var2 = 0; var2 < 256; ++var2) {
+			if (blocksList[var2] != null) {
 				Item.itemsList[var2] = new ItemBlock(var2 - 256);
 			}
 		}

@@ -1,6 +1,6 @@
 package net.minecraft.game.item;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
@@ -80,7 +80,7 @@ public class Item {
 
 	protected Item(int var1) {
 		this.shiftedIndex = var1 + 256;
-		if(itemsList[var1 + 256] != null) {
+		if (itemsList[var1 + 256] != null) {
 			System.out.println("CONFLICT @ " + var1);
 		}
 

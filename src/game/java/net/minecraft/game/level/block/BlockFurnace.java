@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntity;
@@ -27,19 +27,19 @@ public final class BlockFurnace extends BlockContainer {
 		int var6 = var0.getBlockId(var1 - 1, var2, var3);
 		int var7 = var0.getBlockId(var1 + 1, var2, var3);
 		byte var8 = 3;
-		if(Block.opaqueCubeLookup[var4] && !Block.opaqueCubeLookup[var5]) {
+		if (Block.opaqueCubeLookup[var4] && !Block.opaqueCubeLookup[var5]) {
 			var8 = 3;
 		}
 
-		if(Block.opaqueCubeLookup[var5] && !Block.opaqueCubeLookup[var4]) {
+		if (Block.opaqueCubeLookup[var5] && !Block.opaqueCubeLookup[var4]) {
 			var8 = 2;
 		}
 
-		if(Block.opaqueCubeLookup[var6] && !Block.opaqueCubeLookup[var7]) {
+		if (Block.opaqueCubeLookup[var6] && !Block.opaqueCubeLookup[var7]) {
 			var8 = 5;
 		}
 
-		if(Block.opaqueCubeLookup[var7] && !Block.opaqueCubeLookup[var6]) {
+		if (Block.opaqueCubeLookup[var7] && !Block.opaqueCubeLookup[var6]) {
 			var8 = 4;
 		}
 
@@ -47,39 +47,40 @@ public final class BlockFurnace extends BlockContainer {
 	}
 
 	public final int getBlockTexture(World var1, int var2, int var3, int var4, int var5) {
-		if(var5 == 1) {
+		if (var5 == 1) {
 			return Block.stone.blockIndexInTexture;
-		} else if(var5 == 0) {
+		} else if (var5 == 0) {
 			return Block.stone.blockIndexInTexture;
 		} else {
 			byte var6 = var1.getBlockMetadata(var2, var3, var4);
-			if(var6 == 0) {
+			if (var6 == 0) {
 				setDefaultDirection(var1, var2, var3, var4);
 				var6 = var1.getBlockMetadata(var2, var3, var4);
 			}
 
-			return var5 != var6 ? this.blockIndexInTexture : (this.isActive ? this.blockIndexInTexture + 16 : this.blockIndexInTexture - 1);
+			return var5 != var6 ? this.blockIndexInTexture
+					: (this.isActive ? this.blockIndexInTexture + 16 : this.blockIndexInTexture - 1);
 		}
 	}
 
 	public final void randomDisplayTick(World var1, int var2, int var3, int var4, Random var5) {
-		if(this.isActive) {
+		if (this.isActive) {
 			byte var6 = var1.getBlockMetadata(var2, var3, var4);
-			float var7 = (float)var2 + 0.5F;
-			float var8 = (float)var3 + var5.nextFloat() * 6.0F / 16.0F;
-			float var9 = (float)var4 + 0.5F;
+			float var7 = (float) var2 + 0.5F;
+			float var8 = (float) var3 + var5.nextFloat() * 6.0F / 16.0F;
+			float var9 = (float) var4 + 0.5F;
 			float var10 = var5.nextFloat() * 0.6F - 0.3F;
-			if(var6 == 4) {
+			if (var6 == 4) {
 				var1.spawnParticle("smoke", var7 - 0.52F, var8, var9 + var10, 0.0F, 0.0F, 0.0F);
 				var1.spawnParticle("flame", var7 - 0.52F, var8, var9 + var10, 0.0F, 0.0F, 0.0F);
-			} else if(var6 == 5) {
+			} else if (var6 == 5) {
 				var1.spawnParticle("smoke", var7 + 0.52F, var8, var9 + var10, 0.0F, 0.0F, 0.0F);
 				var1.spawnParticle("flame", var7 + 0.52F, var8, var9 + var10, 0.0F, 0.0F, 0.0F);
-			} else if(var6 == 2) {
+			} else if (var6 == 2) {
 				var1.spawnParticle("smoke", var7 + var10, var8, var9 - 0.52F, 0.0F, 0.0F, 0.0F);
 				var1.spawnParticle("flame", var7 + var10, var8, var9 - 0.52F, 0.0F, 0.0F, 0.0F);
 			} else {
-				if(var6 == 3) {
+				if (var6 == 3) {
 					var1.spawnParticle("smoke", var7 + var10, var8, var9 + 0.52F, 0.0F, 0.0F, 0.0F);
 					var1.spawnParticle("flame", var7 + var10, var8, var9 + 0.52F, 0.0F, 0.0F, 0.0F);
 				}
@@ -89,11 +90,12 @@ public final class BlockFurnace extends BlockContainer {
 	}
 
 	public final int getBlockTextureFromSide(int var1) {
-		return var1 == 1 ? Block.stone.blockID : (var1 == 0 ? Block.stone.blockID : (var1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
+		return var1 == 1 ? Block.stone.blockID
+				: (var1 == 0 ? Block.stone.blockID : (var1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
 	}
 
 	public final boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
-		TileEntityFurnace var6 = (TileEntityFurnace)var1.getBlockTileEntity(var2, var3, var4);
+		TileEntityFurnace var6 = (TileEntityFurnace) var1.getBlockTileEntity(var2, var3, var4);
 		var5.displayGUIFurnace(var6);
 		return true;
 	}

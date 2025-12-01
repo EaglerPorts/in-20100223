@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 
@@ -21,27 +21,27 @@ public class BlockSand extends Block {
 	private void tryToFall(World var1, int var2, int var3, int var4) {
 		int var5 = var3;
 
-		while(true) {
+		while (true) {
 			int var8 = var5 - 1;
 			int var6 = var1.getBlockId(var2, var8, var4);
 			boolean var10000;
-			if(var6 == 0) {
+			if (var6 == 0) {
 				var10000 = true;
-			} else if(var6 == Block.fire.blockID) {
+			} else if (var6 == Block.fire.blockID) {
 				var10000 = true;
 			} else {
 				Material var10 = Block.blocksList[var6].material;
 				var10000 = var10 == Material.water ? true : var10 == Material.lava;
 			}
 
-			if(!var10000 || var5 < 0) {
-				if(var5 < 0) {
+			if (!var10000 || var5 < 0) {
+				if (var5 < 0) {
 					var1.setTileNoUpdate(var2, var3, var4, 0);
 				}
 
-				if(var5 != var3) {
+				if (var5 != var3) {
 					var6 = var1.getBlockId(var2, var5, var4);
-					if(var6 > 0 && Block.blocksList[var6].material != Material.air) {
+					if (var6 > 0 && Block.blocksList[var6].material != Material.air) {
 						var1.setTileNoUpdate(var2, var5, var4, 0);
 					}
 
@@ -52,7 +52,7 @@ public class BlockSand extends Block {
 			}
 
 			--var5;
-			if(var1.getBlockId(var2, var5, var4) == Block.fire.blockID) {
+			if (var1.getBlockId(var2, var5, var4) == Block.fire.blockID) {
 				var1.setBlock(var2, var5, var4, 0);
 			}
 		}

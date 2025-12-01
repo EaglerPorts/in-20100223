@@ -1,6 +1,6 @@
 package net.minecraft.game.level.generator.noise;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import util.MathHelper;
 
 public final class NoiseGeneratorPerlin extends NoiseGenerator {
@@ -14,10 +14,10 @@ public final class NoiseGeneratorPerlin extends NoiseGenerator {
 		this.permutations = new int[512];
 
 		int var2;
-		for(var2 = 0; var2 < 256; this.permutations[var2] = var2++) {
+		for (var2 = 0; var2 < 256; this.permutations[var2] = var2++) {
 		}
 
-		for(var2 = 0; var2 < 256; ++var2) {
+		for (var2 = 0; var2 < 256; ++var2) {
 			int var3 = var1.nextInt(256 - var2) + var2;
 			int var4 = this.permutations[var2];
 			this.permutations[var2] = this.permutations[var3];
@@ -48,9 +48,9 @@ public final class NoiseGeneratorPerlin extends NoiseGenerator {
 		int var2 = MathHelper.floor_double(var1) & 255;
 		int var21 = MathHelper.floor_double(var3) & 255;
 		int var4 = MathHelper.floor_double(0.0D) & 255;
-		double var6 = var1 - (double)MathHelper.floor_double(var1);
-		var8 -= (double)MathHelper.floor_double(var8);
-		var10 = 0.0D - (double)MathHelper.floor_double(0.0D);
+		double var6 = var1 - (double) MathHelper.floor_double(var1);
+		var8 -= (double) MathHelper.floor_double(var8);
+		var10 = 0.0D - (double) MathHelper.floor_double(0.0D);
 		double var15 = generateNoise(var6);
 		double var17 = generateNoise(var8);
 		double var19 = generateNoise(var10);
@@ -60,6 +60,16 @@ public final class NoiseGeneratorPerlin extends NoiseGenerator {
 		var2 = this.permutations[var2 + 1] + var21;
 		var21 = this.permutations[var2] + var4;
 		var2 = this.permutations[var2 + 1] + var4;
-		return lerp(var19, lerp(var17, lerp(var15, grad(this.permutations[var12], var6, var8, var10), grad(this.permutations[var21], var6 - 1.0D, var8, var10)), lerp(var15, grad(this.permutations[var5], var6, var8 - 1.0D, var10), grad(this.permutations[var2], var6 - 1.0D, var8 - 1.0D, var10))), lerp(var17, lerp(var15, grad(this.permutations[var12 + 1], var6, var8, var10 - 1.0D), grad(this.permutations[var21 + 1], var6 - 1.0D, var8, var10 - 1.0D)), lerp(var15, grad(this.permutations[var5 + 1], var6, var8 - 1.0D, var10 - 1.0D), grad(this.permutations[var2 + 1], var6 - 1.0D, var8 - 1.0D, var10 - 1.0D))));
+		return lerp(var19,
+				lerp(var17,
+						lerp(var15, grad(this.permutations[var12], var6, var8, var10),
+								grad(this.permutations[var21], var6 - 1.0D, var8, var10)),
+						lerp(var15, grad(this.permutations[var5], var6, var8 - 1.0D, var10),
+								grad(this.permutations[var2], var6 - 1.0D, var8 - 1.0D, var10))),
+				lerp(var17,
+						lerp(var15, grad(this.permutations[var12 + 1], var6, var8, var10 - 1.0D),
+								grad(this.permutations[var21 + 1], var6 - 1.0D, var8, var10 - 1.0D)),
+						lerp(var15, grad(this.permutations[var5 + 1], var6, var8 - 1.0D, var10 - 1.0D),
+								grad(this.permutations[var2 + 1], var6 - 1.0D, var8 - 1.0D, var10 - 1.0D))));
 	}
 }

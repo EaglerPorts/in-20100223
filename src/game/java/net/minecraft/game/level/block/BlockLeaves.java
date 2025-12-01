@@ -1,6 +1,6 @@
 package net.minecraft.game.level.block;
 
-import java.util.Random;
+import net.lax1dude.eaglercraft;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 
@@ -11,11 +11,11 @@ public final class BlockLeaves extends BlockLeavesBase {
 	}
 
 	public final void updateTick(World var1, int var2, int var3, int var4, Random var5) {
-		if(!var1.getBlockMaterial(var2, var3 - 1, var4).isSolid()) {
-			for(int var8 = var2 - 2; var8 <= var2 + 2; ++var8) {
-				for(int var6 = var3 - 1; var6 <= var3; ++var6) {
-					for(int var7 = var4 - 2; var7 <= var4 + 2; ++var7) {
-						if(var1.getBlockId(var8, var6, var7) == Block.wood.blockID) {
+		if (!var1.getBlockMaterial(var2, var3 - 1, var4).isSolid()) {
+			for (int var8 = var2 - 2; var8 <= var2 + 2; ++var8) {
+				for (int var6 = var3 - 1; var6 <= var3; ++var6) {
+					for (int var7 = var4 - 2; var7 <= var4 + 2; ++var7) {
+						if (var1.getBlockId(var8, var6, var7) == Block.wood.blockID) {
 							return;
 						}
 					}
